@@ -1,27 +1,20 @@
 import { Link } from "react-router"
-import { ArrowRight, Heart, Brain, Users, Star, Sparkles } from "lucide-react"
+import { ArrowRight, Heart, Brain, Users, Star, Sparkles, ClipboardList, UserCheck, Target, CheckCircle } from "lucide-react"
 
 export default function Home() {
   return (
     <>
       {/* Banner */}
-      <section className="relative bg-milele-gradient py-20 text-white overflow-hidden">
+      <section className="relative bg-milele-gradient py-20 text-black overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
         <div className="container mx-auto px-4 relative">
-          <div className="grid gap-8 md:grid-cols-2 md:items-center">            <div className="space-y-6">
-            <h1 className="text-4xl font-bold leading-tight md:text-5xl font-serif">
-              <span className="script-font text-5xl md:text-6xl block mb-2">Milele</span>
-              Cuidamos de tu bienestar integral
-            </h1>
+          <div className="grid gap-8 md:grid-cols-2 md:items-center">            <div className="space-y-6">            <h1 className="text-4xl font-bold leading-tight md:text-5xl font-serif">
+            <span className="moontime-light text-5xl md:text-8xl block mb-2">Milele</span>
+            Para siempre
+          </h1>
             <p className="text-lg md:text-xl opacity-90">
-              Nuestro equipo multidisciplinar está aquí para acompañarte en tu camino hacia el bienestar emocional,
-              físico y mental.
-            </p>              <Link
-              to="/contact"
-              className="inline-flex items-center rounded-full bg-white px-8 py-4 text-sm font-medium text-gray-800 shadow-lg transition-all hover:shadow-xl hover:scale-105 milele-shadow"
-            >
-              Pide tu cita <ArrowRight className="ml-2 h-4 w-4" />
-            </Link>
+              En Milele, cada persona es única, y por eso nos esforzamos en ofrecer soluciones terapéuticas que se ajusten a sus necesidades.
+            </p>
           </div>
             <div className="relative h-64 md:h-96">
               <img
@@ -32,52 +25,122 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Metodología de trabajo */}
+      </section>      {/* Metodología de trabajo */}
       <section className="py-16 bg-milele-gradient-soft">
         <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-3xl text-center">
+          <div className="mx-auto max-w-4xl text-center mb-16">
             <h2 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl font-serif">
               Nuestra <span className="gradient-text">Metodología</span> de Trabajo
             </h2>
-            <p className="mb-12 text-lg text-gray-600">
-              Trabajamos con un enfoque personalizado y multidisciplinar, adaptando nuestras técnicas a las necesidades
-              específicas de cada persona para lograr resultados efectivos y duraderos.
+            <p className="text-lg text-gray-600 leading-relaxed">
+              En Centro Milele, ofrecemos un enfoque integral y personalizado para el tratamiento de nuestros pacientes, basado en la colaboración entre profesionales de diversas disciplinas: logopedia, pedagogía y psicología. Nuestro objetivo es abordar de manera conjunta las necesidades de cada individuo, promoviendo su desarrollo y bienestar desde una perspectiva global.
             </p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="rounded-2xl bg-white p-8 shadow-lg milele-shadow hover:shadow-xl transition-all duration-300 border border-milele-green/10">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-milele-green to-milele-cyan text-white">
-                <Brain className="h-8 w-8" />
-              </div>
-              <h3 className="mb-4 text-xl font-semibold font-serif">Evaluación Integral</h3>
-              <p className="text-gray-600">
-                Realizamos una evaluación completa multidisciplinar para entender tus necesidades y establecer objetivos
-                claros.
-              </p>
-            </div>
+          <div className="max-w-4xl mx-auto">
+            {/* Timeline */}
+            <div className="relative">
+              {/* Línea vertical central */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-milele-green via-milele-cyan to-milele-pink opacity-30"></div>
 
-            <div className="rounded-2xl bg-white p-8 shadow-lg milele-shadow hover:shadow-xl transition-all duration-300 border border-milele-cyan/10">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-milele-cyan to-milele-pink text-white">
-                <Heart className="h-8 w-8" />
-              </div>
-              <h3 className="mb-4 text-xl font-semibold font-serif">Tratamiento Personalizado</h3>
-              <p className="text-gray-600">
-                Diseñamos un plan de tratamiento adaptado a tus necesidades específicas con nuestro equipo
-                multidisciplinar.
-              </p>
-            </div>
+              {/* Paso 1 */}
+              <div className="relative flex items-center mb-16">
+                <div className="w-1/2 pr-8 text-right">
+                  <div className="bg-white rounded-2xl p-8 shadow-lg milele-shadow border border-milele-green/20">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4 font-serif">Evaluación Integral y Personalizada</h3>
+                    <p className="text-gray-600 mb-6">
+                      El primer paso en nuestra metodología es realizar una evaluación completa que permita conocer en profundidad las necesidades del paciente. Este proceso involucra:
+                    </p>
+                    <ul className="text-gray-600 space-y-3">
+                      <li className="flex items-start">
+                        <CheckCircle className="h-5 w-5 text-milele-green-dark mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Entrevistas iniciales con los familiares o cuidadores, para obtener información sobre el historial del paciente, sus preocupaciones y objetivos.</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircle className="h-5 w-5 text-milele-green-dark mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Valoración específica de cada área, utilizando herramientas y pruebas especializadas que permiten identificar cualquier dificultad o área que necesite atención.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
 
-            <div className="rounded-2xl bg-white p-8 shadow-lg milele-shadow hover:shadow-xl transition-all duration-300 border border-milele-pink/10">
-              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-milele-pink to-milele-green text-white">
-                <Users className="h-8 w-8" />
+                {/* Círculo numerado */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-16 h-16 bg-gradient-to-br from-milele-green to-milele-cyan rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg z-10">
+                  <ClipboardList className="h-8 w-8" />
+                </div>
+
+                <div className="w-1/2 pl-8">
+                  <div className="bg-gradient-to-br from-milele-green/10 to-milele-cyan/10 rounded-2xl p-8 border border-milele-green/20">
+                    <div className="text-6xl font-bold text-milele-green-dark opacity-20 mb-4 font-serif">01</div>
+                    <h4 className="text-xl font-semibold text-milele-green-dark mb-2">Primer Paso</h4>
+                    <p className="text-gray-600">Conocimiento profundo del paciente y sus necesidades específicas</p>
+                  </div>
+                </div>
               </div>
-              <h3 className="mb-4 text-xl font-semibold font-serif">Seguimiento Continuo</h3>
-              <p className="text-gray-600">
-                Realizamos un seguimiento regular para evaluar tu progreso y ajustar el tratamiento según sea necesario.
-              </p>
+
+              {/* Paso 2 */}
+              <div className="relative flex items-center mb-16">
+                <div className="w-1/2 pr-8">
+                  <div className="bg-gradient-to-br from-milele-cyan/10 to-milele-pink/10 rounded-2xl p-8 border border-milele-cyan/20">
+                    <div className="text-6xl font-bold text-milele-cyan-dark opacity-20 mb-4 font-serif">02</div>
+                    <h4 className="text-xl font-semibold text-milele-cyan-dark mb-2">Colaboración</h4>
+                    <p className="text-gray-600">Trabajo coordinado entre profesionales especializados</p>
+                  </div>
+                </div>
+
+                {/* Círculo numerado */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-16 h-16 bg-gradient-to-br from-milele-cyan to-milele-pink rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg z-10">
+                  <UserCheck className="h-8 w-8" />
+                </div>
+
+                <div className="w-1/2 pl-8 text-left">
+                  <div className="bg-white rounded-2xl p-8 shadow-lg milele-shadow border border-milele-cyan/20">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4 font-serif">Trabajo Multidisciplinar</h3>
+                    <p className="text-gray-600">
+                      Contamos con un equipo profesional altamente cualificado que trabajan de forma coordinada para ofrecer un tratamiento personalizado y efectivo. Nos reunimos periódicamente para compartir avances y ajustar las intervenciones, garantizando que cada paciente reciba el mejor tratamiento en todas las áreas involucradas.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Paso 3 */}
+              <div className="relative flex items-center">
+                <div className="w-1/2 pr-8 text-right">
+                  <div className="bg-white rounded-2xl p-8 shadow-lg milele-shadow border border-milele-pink/20">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4 font-serif">Plan de Intervención Personalizado</h3>
+                    <p className="text-gray-600 mb-6">
+                      Una vez realizada la evaluación, diseñamos un plan de intervención individualizado que incluye:
+                    </p>
+                    <ul className="text-gray-600 space-y-3">
+                      <li className="flex items-start">
+                        <CheckCircle className="h-5 w-5 text-milele-pink-dark mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Objetivos específicos para cada disciplina.</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircle className="h-5 w-5 text-milele-pink-dark mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Técnicas y herramientas adaptadas a cada área, utilizando métodos basados en la evidencia científica y ajustados a la edad y situación del paciente.</span>
+                      </li>
+                      <li className="flex items-start">
+                        <CheckCircle className="h-5 w-5 text-milele-pink-dark mr-3 mt-0.5 flex-shrink-0" />
+                        <span>Planificación de sesiones de intervención, donde cada profesional lleva a cabo su trabajo de forma complementaria maximizando resultados.</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Círculo numerado */}
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-16 h-16 bg-gradient-to-br from-milele-pink to-milele-green rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg z-10">
+                  <Target className="h-8 w-8" />
+                </div>
+
+                <div className="w-1/2 pl-8">
+                  <div className="bg-gradient-to-br from-milele-pink/10 to-milele-green/10 rounded-2xl p-8 border border-milele-pink/20">
+                    <div className="text-6xl font-bold text-milele-pink-dark opacity-20 mb-4 font-serif">03</div>
+                    <h4 className="text-xl font-semibold text-milele-pink-dark mb-2">Implementación</h4>
+                    <p className="text-gray-600">Plan personalizado con objetivos específicos y seguimiento continuo</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
