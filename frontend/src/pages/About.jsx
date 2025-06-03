@@ -1,29 +1,32 @@
 import { Link } from "react-router"
 import { ArrowRight, Heart, Brain, Users } from "lucide-react"
 
-// Datos de ejemplo para las profesionales
+// Profesionales de Milele Centro Multidisciplinar
 const professionals = [
   {
-    id: "silvia",
-    name: "Silvia Rodríguez",
-    role: "Psicóloga Clínica",
+    id: "patricia",
+    name: "Patricia García Díaz",
+    role: "Logopeda",
+    color: "purple",
     description:
-      "Especialista en terapia cognitivo-conductual con más de 10 años de experiencia en el tratamiento de ansiedad y depresión.",
+      "Especialista en trastornos del habla y lenguaje con enfoque en intervención temprana. Apasionada por ayudar a las personas a desarrollar su máximo potencial comunicativo.",
     image: "/placeholder.svg?height=400&width=400",
   },
   {
-    id: "patricia",
-    name: "Patricia López",
-    role: "Psicóloga Infantil",
-    description: "Experta en desarrollo infantil y adolescente, con enfoque en problemas de aprendizaje y conducta.",
+    id: "silvia",
+    name: "Silvia Cabello",
+    role: "Psicóloga",
+    color: "blue",
+    description: "Psicóloga especializada en terapia familiar y de pareja. Comprometida con crear espacios seguros donde las personas puedan sanar y crecer emocionalmente.",
     image: "/placeholder.svg?height=400&width=400",
   },
   {
     id: "lucia",
-    name: "Lucía Martínez",
-    role: "Logopeda",
+    name: "Lucía Miñagorri Bandera",
+    role: "Pedagogía Terapéutica",
+    color: "green",
     description:
-      "Especializada en trastornos del habla y lenguaje, con amplia experiencia en intervención temprana y rehabilitación.",
+      "Especialista en pedagogía terapéutica con experiencia en necesidades educativas especiales. Dedicada a crear estrategias de aprendizaje inclusivas y personalizadas.",
     image: "/placeholder.svg?height=400&width=400",
   },
 ]
@@ -58,33 +61,58 @@ export default function About() {
             <p className="text-lg text-gray-600">
               Cada miembro de nuestro equipo aporta su experiencia única para brindarte la mejor atención integral.
             </p>
-          </div>
+          </div>          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {professionals.map((professional) => {
+              const colorClasses = {
+                purple: {
+                  border: "border-purple-200",
+                  roleText: "text-purple-600",
+                  linkText: "text-purple-600 hover:text-purple-700",
+                  gradient: "from-purple-50 to-white"
+                },
+                blue: {
+                  border: "border-blue-200",
+                  roleText: "text-blue-600",
+                  linkText: "text-blue-600 hover:text-blue-700",
+                  gradient: "from-blue-50 to-white"
+                },
+                green: {
+                  border: "border-green-200",
+                  roleText: "text-green-600",
+                  linkText: "text-green-600 hover:text-green-700",
+                  gradient: "from-green-50 to-white"
+                }
+              }
 
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {professionals.map((professional) => (
-              <div
-                key={professional.id}
-                className="group overflow-hidden rounded-2xl bg-white shadow-lg milele-shadow hover:shadow-xl transition-all duration-300 border border-milele-green/10"
-              >                <div className="relative h-64 w-full overflow-hidden">
-                  <img
-                    src={professional.image || "/placeholder.svg"}
-                    alt={professional.name}
-                    className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+              const colors = colorClasses[professional.color] || colorClasses.green
+
+              return (
+                <div
+                  key={professional.id}
+                  className={`group overflow-hidden rounded-2xl bg-gradient-to-br ${colors.gradient} shadow-lg milele-shadow hover:shadow-xl transition-all duration-300 border ${colors.border}`}
+                >
+                  <div className="relative h-64 w-full overflow-hidden">
+                    <img
+                      src={professional.image || "/placeholder.svg"}
+                      alt={professional.name}
+                      className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="mb-2 text-xl font-semibold font-serif text-gray-900">{professional.name}</h3>
+                    <p className={`mb-3 text-sm font-medium ${colors.roleText}`}>{professional.role}</p>
+                    <p className="mb-4 text-gray-600 text-sm leading-relaxed">{professional.description}</p>
+                    <Link
+                      to={`/about/${professional.id}`}
+                      className={`inline-flex items-center text-sm font-medium ${colors.linkText} transition-colors`}
+                    >
+                      Conocer más <ArrowRight className="ml-1 h-4 w-4" />
+                    </Link>
+                  </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="mb-2 text-xl font-semibold font-serif text-gray-900">{professional.name}</h3>
-                  <p className="mb-3 text-sm font-medium text-milele-cyan-dark">{professional.role}</p>
-                  <p className="mb-4 text-gray-600 text-sm leading-relaxed">{professional.description}</p>                  <Link
-                    to={`/about/${professional.id}`}
-                    className="inline-flex items-center text-sm font-medium text-milele-pink-dark hover:text-milele-pink transition-colors"
-                  >
-                    Conocer más <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import { Link } from "react-router"
-import { MapPin, Phone, Mail } from "lucide-react"
+import { MapPin, Phone, Mail, Instagram } from "lucide-react"
 
 export default function Footer() {
   return (
@@ -12,20 +12,18 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start">
                 <MapPin className="mr-2 h-5 w-5 text-milele-cyan-dark" />
-                <span>Calle Ejemplo 123, Ciudad, CP 12345</span>
+                <span>Calle Lope de Rueda, 78a</span>
               </li>
               <li className="flex items-center">
                 <Phone className="mr-2 h-5 w-5 text-milele-cyan-dark" />
-                <span>+34 123 456 789</span>
+                <span>614438477</span>
               </li>
               <li className="flex items-center">
                 <Mail className="mr-2 h-5 w-5 text-milele-cyan-dark" />
-                <span>info@milelecentro.com</span>
+                <span>centromilele@gmail.com</span>
               </li>
             </ul>
-          </div>
-
-          <div>
+          </div>          <div>
             <h3 className="mb-4 text-lg font-semibold text-gray-900 font-serif">Enlaces</h3>            <ul className="space-y-3 text-sm">
               <li>
                 <Link to="/" className="hover:text-milele-pink-dark transition-colors">
@@ -50,7 +48,24 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="md:col-span-2 lg:col-span-1">
+          <div>
+            <h3 className="mb-4 text-lg font-semibold text-gray-900 font-serif">Síguenos</h3>
+            <div className="flex flex-col space-y-3">
+              <a
+                href="https://www.instagram.com/centromilele"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center hover:text-milele-pink-dark transition-colors"
+              >
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-milele-pink to-milele-cyan text-white mr-3">
+                  <Instagram className="h-4 w-4" />
+                </div>
+                <span className="text-sm">@centromilele</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="lg:col-span-1">
             <h3 className="mb-4 text-lg font-semibold text-gray-900 font-serif">Ubicación</h3>
             <div className="h-64 w-full overflow-hidden rounded-md bg-gradient-to-br from-milele-green-light to-milele-cyan-light border border-milele-green/20">
               {/* Aquí iría el mapa, por ahora un placeholder */}
