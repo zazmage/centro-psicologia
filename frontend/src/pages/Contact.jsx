@@ -1,32 +1,41 @@
 import { useState } from "react"
-import { MapPin, Phone, Mail, Clock, Send, MessageCircle } from "lucide-react"
+import { MapPin, Phone, Mail, Clock, Send, MessageCircle, CheckCircle, AlertCircle } from "lucide-react"
+import { contactAPI } from "../lib/api"
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    subject: "",
     message: "",
   })
-
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState(null) // 'success', 'error', or null
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Aquí iría la lógica para enviar el formulario
-    console.log("Formulario enviado:", formData)
-    alert("Gracias por contactarnos. Te responderemos lo antes posible.")
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      subject: "",
-      message: "",
-    })
+    setIsSubmitting(true)
+    setSubmitStatus(null)
+
+    try {
+      await contactAPI.submitContact(formData)
+      setSubmitStatus('success')
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      })
+    } catch (error) {
+      setSubmitStatus('error')
+      console.error('Error submitting form:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -104,17 +113,6 @@ export default function Contact() {
                   </div>
                 </div>
               </div>
-
-              {/* Map */}
-              <div className="bg-white p-6 rounded-2xl shadow-lg milele-shadow border border-milele-cyan/10">
-                <h3 className="mb-4 text-xl font-semibold font-serif text-gray-900">Ubicación</h3>
-                <div className="h-64 w-full overflow-hidden rounded-xl bg-gradient-to-br from-milele-green-light to-milele-cyan-light border border-milele-green/20">
-                  {/* Aquí iría el mapa, por ahora un placeholder */}
-                  <div className="flex h-full items-center justify-center">
-                    <span className="text-gray-600 font-serif">Mapa de ubicación</span>
-                  </div>
-                </div>
-              </div>
             </div>
 
             {/* Contact Form */}
@@ -127,6 +125,21 @@ export default function Contact() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Success Message */}
+                {submitStatus === 'success' && (
+                  <div className="p-4 bg-green-50 border border-green-200 rounded-xl flex items-center">
+                    <CheckCircle className="h-5 w-5 text-green-600 mr-3" />
+                    <p className="text-green-800">¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.</p>
+                  </div>
+                )}
+
+                {/* Error Message */}
+                {submitStatus === 'error' && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-center">
+                    <AlertCircle className="h-5 w-5 text-red-600 mr-3" />
+                    <p className="text-red-800">Error al enviar el mensaje. Por favor, inténtalo de nuevo.</p>
+                  </div>
+                )}
                 <div>
                   <label htmlFor="name" className="mb-2 block text-sm font-medium text-gray-700 font-serif">
                     Nombre completo *
@@ -171,28 +184,7 @@ export default function Contact() {
                     onChange={handleChange}
                     className="w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-milele-cyan-dark focus:outline-none focus:ring-2 focus:ring-milele-cyan-dark/20 transition-colors"
                     placeholder="+34 123 456 789"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="subject" className="mb-2 block text-sm font-medium text-gray-700 font-serif">
-                    Asunto *
-                  </label>
-                  <select
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-milele-cyan-dark focus:outline-none focus:ring-2 focus:ring-milele-cyan-dark/20 transition-colors"
-                  >
-                    <option value="">Selecciona una opción</option>
-                    <option value="cita">Solicitar cita</option>
-                    <option value="informacion">Solicitar información</option>
-                    <option value="consulta">Consulta general</option>
-                    <option value="otro">Otro</option>
-                  </select>
-                </div>
+                  />                </div>
 
                 <div>
                   <label htmlFor="message" className="mb-2 block text-sm font-medium text-gray-700 font-serif">
@@ -208,50 +200,17 @@ export default function Contact() {
                     className="w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-milele-cyan-dark focus:outline-none focus:ring-2 focus:ring-milele-cyan-dark/20 transition-colors resize-none"
                     placeholder="Cuéntanos cómo podemos ayudarte..."
                   ></textarea>
-                </div>
-
-                <div className="pt-2">
+                </div>                <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full inline-flex items-center justify-center rounded-xl bg-milele-gradient px-8 py-4 text-sm font-medium text-black shadow-lg transition-all hover:shadow-xl hover:scale-105 milele-shadow"
+                    disabled={isSubmitting}
+                    className="w-full inline-flex items-center justify-center rounded-xl bg-milele-gradient px-8 py-4 text-sm font-medium text-black shadow-lg transition-all hover:shadow-xl hover:scale-105 milele-shadow disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
                     <Send className="mr-2 h-4 w-4" />
-                    Enviar mensaje
+                    {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
                   </button>
                 </div>
               </form>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Emergency Contact */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto max-w-4xl">
-            <div className="bg-gradient-to-br from-milele-green-light to-milele-cyan-light p-8 rounded-2xl shadow-lg milele-shadow border border-milele-green/20">
-              <h2 className="mb-4 text-2xl font-bold text-center font-serif text-gray-900">
-                ¿Necesitas <span className="gradient-text">atención urgente</span>?
-              </h2>
-              <p className="text-center text-gray-700 mb-6">
-                Si tienes una emergencia o necesitas atención inmediata, no dudes en contactarnos directamente.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="tel:+34123456789"
-                  className="inline-flex items-center justify-center rounded-full bg-milele-gradient px-8 py-4 text-sm font-medium text-black shadow-lg transition-all hover:shadow-xl hover:scale-105 milele-shadow"
-                >
-                  <Phone className="mr-2 h-4 w-4" />
-                  Llamar ahora
-                </a>
-                <a
-                  href="mailto:urgencias@milelecentro.com"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-8 py-4 text-sm font-medium text-gray-800 shadow-lg transition-all hover:shadow-xl hover:scale-105 milele-shadow border border-milele-green/20"
-                >
-                  <Mail className="mr-2 h-4 w-4" />
-                  Email urgente
-                </a>
-              </div>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { Link } from "react-router"
 import { ArrowRight, Heart, Brain, Users, Star, Sparkles, ClipboardList, UserCheck, Target, CheckCircle, MessageSquare, BookOpen, Shield, TrendingUp, HandHeart, GraduationCap } from "lucide-react"
+import tulipanes from "../assets/images/tulipanes.webp"
 
 export default function Home() {
   return (
@@ -8,24 +9,30 @@ export default function Home() {
       <section className="relative bg-milele-gradient py-20 text-black overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent"></div>
         <div className="container mx-auto px-4 relative">
-          <div className="grid gap-8 md:grid-cols-2 md:items-center">            <div className="space-y-6">            <h1 className="text-4xl font-bold leading-tight md:text-5xl font-serif">
-            <span className="moontime-light text-5xl md:text-8xl block mb-2">Milele</span>
-            Para siempre
-          </h1>
-            <p className="text-lg md:text-xl opacity-90">
-              En Milele, cada persona es única, y por eso nos esforzamos en ofrecer soluciones terapéuticas que se ajusten a sus necesidades.
-            </p>
-          </div>
-            <div className="relative h-64 md:h-96">
-              <img
-                src="/placeholder.svg?height=400&width=600"
-                alt="Milele Centro Multidisciplinar"
-                className="rounded-2xl object-cover shadow-2xl w-full h-full"
-              />
+          <div className="grid max-w-6xl mx-auto gap-12 lg:grid-cols-2 lg:items-center">
+            <div className="space-y-6 text-center lg:text-left">
+              <h1 className="text-4xl font-bold leading-tight md:text-5xl font-serif">
+                <span className="moontime-light text-5xl md:text-8xl block mb-2">Milele</span>
+                Para siempre
+              </h1>
+              <p className="text-lg md:text-xl opacity-90 max-w-lg mx-auto lg:mx-0">
+                En Milele, cada persona es única, y por eso nos esforzamos en ofrecer soluciones terapéuticas que se ajusten a sus necesidades.
+              </p>
+            </div>
+            <div className="flex justify-center lg:justify-end">
+              <div className="relative max-w-md w-full">
+                <img
+                  src={tulipanes}
+                  alt="Milele Centro Multidisciplinar"
+                  className="w-full h-auto object-contain rounded-2xl shadow-2xl"
+                />
+              </div>
             </div>
           </div>
         </div>
-      </section>      {/* Metodología de trabajo */}
+      </section>
+
+      {/* Metodología de trabajo */}
       <section className="py-16 bg-milele-gradient-soft">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center mb-16">
@@ -216,40 +223,38 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <h2 className="mb-12 text-center text-3xl font-bold text-gray-900 md:text-4xl font-serif">
             ¿Por qué <span className="moontime-font text-5xl gradient-text">Milele</span>?
-          </h2>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="flex items-start p-6 rounded-2xl bg-white shadow-md milele-shadow">
-              <div className="mr-6 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-milele-green to-milele-cyan text-white">
-                <Users className="h-6 w-6" />
+          </h2>          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+            <div className="flex items-start p-5 rounded-2xl bg-white shadow-md milele-shadow">
+              <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-milele-green to-milele-cyan text-white flex-shrink-0">
+                <Users className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="mb-3 text-xl font-semibold font-serif">Equipo Multidisciplinar</h3>
-                <p className="text-gray-600">
+                <h3 className="mb-2 text-lg font-semibold font-serif">Equipo Multidisciplinar</h3>
+                <p className="text-gray-600 text-sm">
                   Equipo multidisciplinar altamente cualificado y en constante formación con un enfoque personalizado para cada paciente y un tratamiento único y adaptado.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start p-6 rounded-2xl bg-white shadow-md milele-shadow">
-              <div className="mr-6 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-milele-cyan to-milele-pink text-white">
-                <HandHeart className="h-6 w-6" />
+            <div className="flex items-start p-5 rounded-2xl bg-white shadow-md milele-shadow">
+              <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-milele-cyan to-milele-pink text-white flex-shrink-0">
+                <HandHeart className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="mb-3 text-xl font-semibold font-serif">Compromiso Integral</h3>
-                <p className="text-gray-600">
+                <h3 className="mb-2 text-lg font-semibold font-serif">Compromiso Integral</h3>
+                <p className="text-gray-600 text-sm">
                   Compromiso con el bienestar integral de cada individuo, atendiendo todas sus necesidades.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start p-6 rounded-2xl bg-white shadow-md milele-shadow">
-              <div className="mr-6 flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-milele-pink to-milele-green text-white">
-                <TrendingUp className="h-6 w-6" />
+            <div className="flex items-start p-5 rounded-2xl bg-white shadow-md milele-shadow">
+              <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-milele-pink to-milele-green text-white flex-shrink-0">
+                <TrendingUp className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="mb-3 text-xl font-semibold font-serif">Seguimiento Constante</h3>
-                <p className="text-gray-600">
+                <h3 className="mb-2 text-lg font-semibold font-serif">Seguimiento Constante</h3>
+                <p className="text-gray-600 text-sm">
                   Seguimiento constante para asegurar el éxito y la evolución positiva del tratamiento.
                 </p>
               </div>

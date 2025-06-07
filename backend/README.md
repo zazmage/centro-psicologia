@@ -1,6 +1,6 @@
-# Metro de Sevilla - Employee Shift Management System
+# Milele Psychology Center - Contact Form API
 
-Este backend proporciona una API para gestionar turnos de empleados del Metro de Sevilla.
+Este backend proporciona una API para gestionar el formulario de contacto del Centro de Psicología Milele.
 
 ## Estructura del proyecto
 
@@ -8,13 +8,13 @@ Este backend proporciona una API para gestionar turnos de empleados del Metro de
 backend/
 ├── src/
 │   ├── controllers/    # Controladores para manejar la lógica de negocio
-│   ├── middleware/     # Middleware de autenticación y autorización
-│   ├── models/         # Modelos de datos para MongoDB
-│   ├── routes/         # Rutas de la API
-│   └── server.js       # Configuración principal del servidor
-├── .env.example        # Plantilla para variables de entorno
-├── package.json        # Dependencias y scripts del proyecto
-└── README.md           # Documentación del proyecto
+│   ├── lib/           # Utilidades (configuración de email)
+│   ├── models/        # Modelos de datos para MongoDB
+│   ├── routes/        # Rutas de la API
+│   └── server.js      # Configuración principal del servidor
+├── .env.example       # Plantilla para variables de entorno
+├── package.json       # Dependencias y scripts del proyecto
+└── README.md          # Documentación del proyecto
 ```
 
 ## Requisitos
@@ -34,8 +34,9 @@ cp .env.example .env
 
 ```
 PORT=5000                               # Puerto para el servidor
-MONGODB_URI=mongodb://localhost:27017/metro-sevilla  # URL de conexión a MongoDB
-JWT_SECRET=your_jwt_secret_key_here     # Clave secreta para tokens JWT
+MONGODB_URI=mongodb://localhost:27017/milele  # URL de conexión a MongoDB
+RESEND_API_KEY=your_resend_api_key_here # Clave API de Resend para envío de emails
+CONTACT_EMAIL=contact@milele.com        # Email donde recibir los formularios de contacto
 ```
 
 ## Instalación
@@ -48,6 +49,7 @@ npm install
 ## Ejecución
 
 ```bash
+```bash
 # Modo desarrollo con recarga automática
 npm run dev
 
@@ -57,55 +59,41 @@ npm start
 
 ## API Endpoints
 
-### Autenticación
+### Formulario de Contacto
 
-- `POST /api/users/register` - Registrar nuevo usuario
-- `POST /api/users/login` - Iniciar sesión y obtener token
+- `POST /api/contact` - Enviar formulario de contacto
 
-### Usuarios
+## Modelo
 
-- `GET /api/users/profile` - Obtener perfil del usuario autenticado
-- `GET /api/users/all` - Obtener todos los usuarios (solo admin)
-- `PUT /api/users/update/:id` - Actualizar usuario
-- `PUT /api/users/password` - Actualizar contraseña
-- `PUT /api/users/deactivate/:id` - Desactivar usuario (solo admin)
-
-### Turnos
-
-- `POST /api/shifts` - Crear nuevo turno (solo admin)
-- `GET /api/shifts` - Obtener todos los turnos
-- `GET /api/shifts/:id` - Obtener turno por ID
-- `GET /api/shifts/employee/:employeeId` - Obtener turnos por empleado
-- `PUT /api/shifts/:id` - Actualizar turno (solo admin)
-- `DELETE /api/shifts/:id` - Eliminar turno (solo admin)
-
-## Modelos
-
-### Usuario
+### Contacto
 
 ```javascript
 {
-  username: String,         // Nombre de usuario único
-  email: String,            // Correo electrónico único
-  password: String,         // Contraseña (hasheada)
-  name: String,             // Nombre completo
-  role: String,             // Rol: 'admin' o 'employee'
-  isActive: Boolean,        // Estado de la cuenta
-  createdAt: Date,          // Fecha de creación
-  updatedAt: Date           // Fecha de última actualización
+  name: String,             // Nombre completo (requerido)
+  email: String,            // Correo electrónico (requerido)
+  phone: String,            // Teléfono (opcional)
+  message: String,          // Mensaje (requerido)
+  createdAt: Date,          // Fecha de creación automática
 }
 ```
 
-### Turno
+## Funcionalidades
 
-```javascript
-{
-  start: Date,              // Fecha y hora de inicio
-  end: Date,                // Fecha y hora de fin
-  title: String,            // Título del turno
-  type: String,             // Tipo: 'mañana', 'tarde' o 'noche'
-  employee: ObjectId,       // ID del empleado (ref: User)
-  createdAt: Date,          // Fecha de creación
-  updatedAt: Date           // Fecha de última actualización
-}
-```
+- **Validación de datos**: Validación completa de campos requeridos
+- **Persistencia**: Almacenamiento de formularios en MongoDB
+- **Notificaciones por email**: Envío automático de emails usando Resend
+- **CORS configurado**: Permite peticiones desde el frontend
+- **Manejo de errores**: Respuestas de error descriptivas
+
+## Configuración de Email
+
+El sistema utiliza Resend para el envío de emails. Los formularios de contacto se envían automáticamente al email configurado en `CONTACT_EMAIL`.
+
+## Tecnologías
+
+- **Node.js** - Entorno de ejecución
+- **Express.js** - Framework web
+- **MongoDB** - Base de datos
+- **Mongoose** - ODM para MongoDB
+- **Resend** - Servicio de envío de emails
+- **CORS** - Configuración de políticas de origen cruzado

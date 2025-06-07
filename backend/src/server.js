@@ -1,9 +1,9 @@
-const express = require('express');
-const mongoose = require('mongoose');
-require('dotenv').config();
-const userRoutes = require('./routes/user.route');
-const shiftRoutes = require('./routes/shift.route');
-const User = require('./models/user.model');
+import express from 'express';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import contactRoutes from './routes/contact.route.js';
+
+dotenv.config();
 
 // Express app initialization
 const app = express();
@@ -25,12 +25,11 @@ app.use((req, res, next) => {
 });
 
 // API routes
-app.use('/api/users', userRoutes);
-app.use('/api/shifts', shiftRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Root route
 app.get('/', (req, res) => {
-  res.json({ message: 'Metro de Sevilla Shift Management API' });
+  res.json({ message: 'Centro Milele - Contact Form API' });
 });
 
 // Error handling middleware
@@ -39,41 +38,70 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!', error: err.message });
 });
 
-// Create initial admin user if no users exist
-const createInitialAdminUser = async () => {
-  try {
-    const userCount = await User.countDocuments();
-    if (userCount === 0 && process.env.ADMIN_USERNAME) {
-      const adminUser = new User({
-        username: process.env.ADMIN_USERNAME,
-        email: process.env.ADMIN_EMAIL,
-        password: process.env.ADMIN_PASSWORD,
-        name: process.env.ADMIN_NAME,
-        role: 'admin'
-      });
+// Validate environment variables
+const validateEnvironmentVariables = () => {
+  console.log('🔍 Validating environment variables...'); const requiredEnvVars = {
+    MONGODB_URI: process.env.MONGODB_URI,
+    RESEND_API_KEY: process.env.RESEND_API_KEY,
+    NOTIFICATION_EMAIL: process.env.NOTIFICATION_EMAIL
+  };
 
-      await adminUser.save();
-      console.log('Initial admin user created');
+  const missingVars = [];
+  const presentVars = [];
+
+  for (const [key, value] of Object.entries(requiredEnvVars)) {
+    if (!value || value.trim() === '') {
+      missingVars.push(key);
+    } else {
+      presentVars.push(key);
     }
-  } catch (error) {
-    console.error('Error creating initial admin user:', error);
   }
+
+  if (presentVars.length > 0) {
+    console.log('✅ Present environment variables:', presentVars.join(', '));
+  }
+
+  if (missingVars.length > 0) {
+    console.warn('❌ Missing environment variables:', missingVars.join(', '));
+    console.warn('💡 Please set these variables in your .env file');
+    return false;
+  }
+
+  console.log('✅ All required environment variables are present');
+  return true;
 };
 
 // Connect to MongoDB and start server
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('Connected to MongoDB');
-    createInitialAdminUser();
+if (!process.env.MONGODB_URI) {
+  console.error('❌ MONGODB_URI environment variable is not set');
+  console.error('💡 Please set MONGODB_URI in your .env file');
+  process.exit(1);
+}
 
+console.log('🔗 Attempting to connect to MongoDB...');
+console.log(`📡 Connection URI: ${process.env.MONGODB_URI.replace(/\/\/([^:]+):([^@]+)@/, '//*****:*****@')}`);
+
+mongoose.connect(process.env.MONGODB_URI)
+  .then(async () => {
+    console.log('🔗 Connected to MongoDB (milele database)');
+
+    // Validate environment variables
+    const envValid = validateEnvironmentVariables();
+    if (!envValid) {
+      console.warn('⚠️ Some environment variables are missing. Email functionality may not work properly.');
+    }
+
+    // Start the server
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      console.log(`🚀 Server is running on port ${PORT}`);
+      console.log(`🌐 API available at: http://localhost:${PORT}`);
+      console.log(`📝 Contact form endpoint: http://localhost:${PORT}/api/contact`);
     });
   })
-  .catch((err) => {
-    console.error('Failed to connect to MongoDB:', err.message);
+  .catch((error) => {
+    console.error('❌ MongoDB connection error:', error.message);
+    console.error('💡 Please check your MONGODB_URI and ensure MongoDB is running');
     process.exit(1);
   });
 
-module.exports = app;
+export default app;

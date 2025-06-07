@@ -1,62 +1,87 @@
 import { useState } from "react"
-import { MapPin, ChevronLeft, ChevronRight, Home, Sparkles } from "lucide-react"
+import { MapPin, ChevronLeft, ChevronRight, Home, Sparkles, ArrowRight, Clock, Users, Shield, Heart } from "lucide-react"
+import ImageCarousel from "../components/ImageCarousel"
+import ImageModal from "../components/ImageModal"
+import salonColores from "../assets/images/salon-colores.webp"
+import plano from "../assets/images/plano.webp"
+import juguetes from "../assets/images/juguetes.webp"
+import corredor from "../assets/images/corredor.webp"
+import microondas from "../assets/images/microondas.webp"
+import mueble from "../assets/images/mueble.webp"
+import puerta from "../assets/images/puerta.webp"
+import sala from "../assets/images/sala.webp"
+import wc from "../assets/images/wc.webp"
 
-// Datos de ejemplo para los espacios
-const spaces = [
+// Galería de imágenes de nuestras instalaciones
+const galleryImages = [
   {
-    id: "espacio1",
-    name: "Centro Principal",
-    description:
-      "Nuestro centro principal cuenta con amplias instalaciones diseñadas para crear un ambiente acogedor y tranquilo. Disponemos de varias salas de terapia individual, una sala para terapia grupal y espacios especialmente adaptados para niños.",
-    location: "Calle Ejemplo 123, Ciudad, CP 12345",
-    directions:
-      "Ubicado en el centro de la ciudad, a 5 minutos caminando de la estación de metro Central. Hay parking público disponible en las inmediaciones.",
-    images: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-    ],
-    features: ["Salas de terapia individual", "Sala de terapia grupal", "Espacios para niños", "Parking disponible"],
+    src: salonColores,
+    title: "Sala de Colores",
+    description: "Espacio vibrante y acogedor para terapia infantil",
   },
   {
-    id: "espacio2",
-    name: "Centro Infantil",
-    description:
-      "Espacio especializado en terapia infantil y logopedia. Todas las salas están adaptadas para niños de diferentes edades, con materiales y juegos terapéuticos. Contamos con una sala sensorial y un espacio exterior seguro para actividades al aire libre.",
-    location: "Avenida Principal 456, Ciudad, CP 12345",
-    directions:
-      "Situado en una zona residencial tranquila, con fácil acceso en transporte público (líneas de autobús 10 y 15). Disponemos de parking propio para clientes.",
-    images: [
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-      "/placeholder.svg?height=600&width=800",
-    ],
-    features: ["Sala sensorial", "Juegos terapéuticos", "Espacio exterior", "Parking propio"],
+    src: sala,
+    title: "Sala de Terapia",
+    description: "Ambiente tranquilo para sesiones individuales",
+  },
+  {
+    src: juguetes,
+    title: "Área de Juegos",
+    description: "Materiales lúdicos y terapéuticos especializados",
+  },
+  {
+    src: corredor,
+    title: "Corredor Principal",
+    description: "Amplios pasillos con iluminación natural",
+  },
+  {
+    src: mueble,
+    title: "Mobiliario Especializado",
+    description: "Equipamiento adaptado para todas las edades",
+  },
+  {
+    src: puerta,
+    title: "Acceso Principal",
+    description: "Entrada acogedora y accesible",
+  },
+  {
+    src: microondas,
+    title: "Área de Descanso",
+    description: "Espacio para familias y cuidadores",
+  },
+  {
+    src: wc,
+    title: "Servicios",
+    description: "Instalaciones adaptadas y cómodas",
+  },
+  {
+    src: plano,
+    title: "Distribución del Centro",
+    description: "Plano general de nuestras instalaciones",
   },
 ]
 
 export default function Spaces() {
-  const [activeImageIndex, setActiveImageIndex] = useState({})
+  const [selectedImage, setSelectedImage] = useState(null)
 
-  const nextImage = (spaceId) => {
-    const currentIndex = activeImageIndex[spaceId] || 0
-    const space = spaces.find((s) => s.id === spaceId)
-    if (space) {
-      setActiveImageIndex({
-        ...activeImageIndex,
-        [spaceId]: (currentIndex + 1) % space.images.length,
-      })
-    }
+  const openModal = (index) => {
+    setSelectedImage(index)
   }
 
-  const prevImage = (spaceId) => {
-    const currentIndex = activeImageIndex[spaceId] || 0
-    const space = spaces.find((s) => s.id === spaceId)
-    if (space) {
-      setActiveImageIndex({
-        ...activeImageIndex,
-        [spaceId]: (currentIndex - 1 + space.images.length) % space.images.length,
-      })
+  const closeModal = () => {
+    setSelectedImage(null)
+  }
+
+  const navigateModal = (direction, targetIndex = null) => {
+    if (targetIndex !== null) {
+      setSelectedImage(targetIndex)
+      return
+    }
+
+    if (direction === 'next') {
+      setSelectedImage((prev) => (prev + 1) % galleryImages.length)
+    } else if (direction === 'prev') {
+      setSelectedImage((prev) => (prev - 1 + galleryImages.length) % galleryImages.length)
     }
   }
 
@@ -68,108 +93,155 @@ export default function Spaces() {
         <div className="container mx-auto px-4 relative">
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="mb-6 text-4xl font-bold md:text-5xl font-serif text-black">
-              <span className="script-font text-5xl md:text-6xl block mb-2 text-black">Nuestros Espacios</span>
+              <span className="script-font text-5xl md:text-6xl block mb-2 text-black">Nuestras Instalaciones</span>
             </h1>
             <p className="mb-8 text-lg md:text-xl text-black/90 max-w-3xl mx-auto">
-              Contamos con instalaciones modernas y acogedoras, diseñadas para crear un ambiente confortable donde
-              puedas sentirte seguro y relajado durante tus sesiones.
+              Descubre nuestro centro multidisciplinar, diseñado para crear un ambiente acogedor y profesional donde
+              puedas sentirte cómodo durante tus sesiones terapéuticas.
             </p>
           </div>
         </div>
-      </section>
-
-      {/* Spaces Section */}
+      </section>      {/* Main Gallery Section */}
       <section className="py-16 bg-milele-gradient-soft">
         <div className="container mx-auto px-4">
-          <div className="space-y-16">
-            {spaces.map((space) => (
-              <div
-                key={space.id}
-                className="rounded-2xl bg-white p-8 md:p-12 shadow-xl milele-shadow border border-milele-green/10"
-              >
-                <div className="grid gap-8 lg:grid-cols-2 items-start">
-                  <div className="space-y-6">
-                    <div className="flex items-center mb-4">
-                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-milele-green to-milele-cyan text-white mr-4">
-                        <Home className="h-6 w-6" />
+          <div className="max-w-6xl mx-auto">
+            {/* Featured Image Carousel */}
+            <div className="mb-12">
+              <ImageCarousel
+                images={galleryImages}
+                onImageClick={openModal}
+                autoPlayDelay={6000}
+              />
+            </div>
+
+            {/* Thumbnail Grid */}
+            <div className="mb-12">
+              <h2 className="mb-8 text-3xl font-bold text-center text-gray-900 font-serif">
+                Galería <span className="gradient-text">Completa</span>
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {galleryImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className="group relative aspect-square overflow-hidden rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer"
+                    onClick={() => openModal(index)}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.title}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300"></div>
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="bg-white/90 text-gray-800 p-2 rounded-lg text-sm font-medium">
+                        Ver imagen
                       </div>
-                      <h2 className="text-3xl font-bold text-gray-900 font-serif">{space.name}</h2>
-                    </div>
-
-                    <p className="text-gray-600 leading-relaxed text-lg">{space.description}</p>
-
-                    <div className="bg-gradient-to-br from-milele-cyan-light to-white p-6 rounded-xl border border-milele-cyan/20">
-                      <h3 className="mb-3 flex items-center text-xl font-semibold font-serif text-gray-900">
-                        <MapPin className="mr-2 h-5 w-5 text-milele-cyan-dark" /> Ubicación
-                      </h3>
-                      <p className="mb-3 text-gray-700 font-medium">{space.location}</p>
-                      <h4 className="mb-2 font-medium text-gray-900">Cómo llegar:</h4>
-                      <p className="text-gray-600">{space.directions}</p>
-                    </div>
-
-                    <div className="bg-gradient-to-br from-milele-pink-light to-white p-6 rounded-xl border border-milele-pink/20">
-                      <h3 className="mb-3 flex items-center text-xl font-semibold font-serif text-gray-900">
-                        <Sparkles className="mr-2 h-5 w-5 text-milele-pink-dark" /> Características
-                      </h3>
-                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        {space.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center text-gray-700">
-                            <div className="w-2 h-2 bg-milele-pink-dark rounded-full mr-3"></div>
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
                     </div>
                   </div>
+                ))}
+              </div>
+            </div>            {/* Centro Milele Information */}
+            <div className="bg-white rounded-2xl shadow-xl milele-shadow border border-milele-green/10 overflow-hidden">
+              <div className="p-8">
+                <div className="flex items-center mb-8">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-milele-green to-milele-cyan text-white mr-6 shadow-lg">
+                    <Home className="h-8 w-8" />
+                  </div>
+                  <div>
+                    <h2 className="text-4xl font-bold text-gray-900 font-serif">Centro Milele</h2>
+                    <p className="text-lg text-gray-600 mt-1">Espacio Multidisciplinar de Bienestar</p>
+                  </div>
+                </div>
 
-                  <div className="space-y-4">
-                    <h3 className="text-xl font-semibold font-serif text-gray-900">Galería de imágenes</h3>
-                    <div className="relative">                      <div className="relative h-64 md:h-80 w-full overflow-hidden rounded-xl shadow-lg">
-                      <img
-                        src={space.images[activeImageIndex[space.id] || 0]}
-                        alt={`${space.name} - Imagen ${(activeImageIndex[space.id] || 0) + 1}`}
-                        className="object-cover w-full h-full"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                <p className="text-gray-700 leading-relaxed text-lg mb-8">
+                  Nuestro centro multidisciplinar ha sido diseñado meticulosamente para crear un ambiente terapéutico
+                  óptimo y acogedor. Cada espacio refleja nuestro compromiso con el bienestar y la comodidad de
+                  nuestros pacientes, proporcionando un entorno donde la sanación y el crecimiento personal pueden
+                  florecer naturalmente.
+                </p>
+
+                {/* Características principales en grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                  <div className="bg-gradient-to-br from-milele-cyan-light to-white p-6 rounded-xl border border-milele-cyan/20">
+                    <div className="flex items-center mb-4">
+                      <div className="h-10 w-10 bg-milele-cyan-dark rounded-full flex items-center justify-center mr-3">
+                        <Sparkles className="h-5 w-5 text-white" />
+                      </div>
+                      <h3 className="text-xl font-semibold font-serif text-gray-900">Instalaciones</h3>
                     </div>
+                    <ul className="space-y-2">
+                      {[
+                        "Salas de terapia individual",
+                        "Espacios adaptados para niños",
+                        "Área de juegos terapéuticos",
+                        "Iluminación natural optimizada",
+                        "Mobiliario especializado",
+                        "Accesibilidad completa"
+                      ].map((feature, index) => (
+                        <li key={index} className="flex items-center text-gray-700">
+                          <div className="w-2 h-2 bg-milele-cyan-dark rounded-full mr-3 flex-shrink-0"></div>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                      {space.images.length > 1 && (
-                        <>
-                          <button
-                            onClick={() => prevImage(space.id)}
-                            className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-gray-800 shadow-lg hover:bg-white transition-all milele-shadow"
-                            aria-label="Imagen anterior"
-                          >
-                            <ChevronLeft className="h-5 w-5" />
-                          </button>
-                          <button
-                            onClick={() => nextImage(space.id)}
-                            className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-gray-800 shadow-lg hover:bg-white transition-all milele-shadow"
-                            aria-label="Imagen siguiente"
-                          >
-                            <ChevronRight className="h-5 w-5" />
-                          </button>
-                        </>
-                      )}
-
-                      <div className="mt-4 flex justify-center space-x-2">
-                        {space.images.map((_, imageIndex) => (
-                          <button
-                            key={imageIndex}
-                            className={`h-3 w-3 rounded-full transition-all ${(activeImageIndex[space.id] || 0) === imageIndex
-                              ? "bg-milele-cyan-dark scale-110"
-                              : "bg-gray-300 hover:bg-gray-400"
-                              }`}
-                            onClick={() => setActiveImageIndex({ ...activeImageIndex, [space.id]: imageIndex })}
-                            aria-label={`Ir a imagen ${imageIndex + 1}`}
-                          />
-                        ))}
+                  <div className="bg-gradient-to-br from-milele-pink-light to-white p-6 rounded-xl border border-milele-pink/20">
+                    <div className="flex items-center mb-4">
+                      <div className="h-10 w-10 bg-milele-pink-dark rounded-full flex items-center justify-center mr-3">
+                        <MapPin className="h-5 w-5 text-white" />
+                      </div>
+                      <h3 className="text-xl font-semibold font-serif text-gray-900">Ubicación</h3>
+                    </div>
+                    <div className="space-y-3">
+                      <div>
+                        <p className="font-medium text-gray-900">Calle Lope de Rueda, 78a</p>
+                        <p className="text-gray-700">Puerto de la Torre, 29190 Málaga</p>
+                      </div>
+                      <div>
+                        <h4 className="font-medium text-gray-900 mb-1">Transporte:</h4>
+                        <p className="text-gray-600 text-sm">
+                          Excelente conexión con transporte público y fácil acceso desde el centro de Málaga.
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
+
+                {/* Valores y compromisos */}
+                <div className="bg-gradient-to-br from-milele-green-light to-white p-6 rounded-xl border border-milele-green/20">
+                  <div className="flex items-center mb-4">
+                    <div className="h-10 w-10 bg-milele-green-dark rounded-full flex items-center justify-center mr-3">
+                      <Heart className="h-5 w-5 text-white" />
+                    </div>
+                    <h3 className="text-xl font-semibold font-serif text-gray-900">Nuestro Compromiso</h3>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="text-center">
+                      <div className="h-12 w-12 bg-white rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
+                        <Clock className="h-6 w-6 text-milele-green-dark" />
+                      </div>
+                      <h4 className="font-medium text-gray-900 mb-1">Horarios Flexibles</h4>
+                      <p className="text-sm text-gray-600">Adaptados a tus necesidades</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="h-12 w-12 bg-white rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
+                        <Users className="h-6 w-6 text-milele-green-dark" />
+                      </div>
+                      <h4 className="font-medium text-gray-900 mb-1">Atención Personalizada</h4>
+                      <p className="text-sm text-gray-600">Cada persona es única</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="h-12 w-12 bg-white rounded-full flex items-center justify-center mx-auto mb-2 shadow-md">
+                        <Shield className="h-6 w-6 text-milele-green-dark" />
+                      </div>
+                      <h4 className="font-medium text-gray-900 mb-1">Confidencialidad</h4>
+                      <p className="text-sm text-gray-600">Privacidad garantizada</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
@@ -180,28 +252,30 @@ export default function Spaces() {
         <div className="container mx-auto px-4 relative">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="mb-6 text-3xl font-bold md:text-4xl font-serif text-black">
-              ¿Te gustaría <span className="script-font text-4xl md:text-5xl text-black">visitarnos</span>?
+              ¿Te gustaría{" "}
+              <span className="script-font text-4xl md:text-5xl text-black">visitarnos</span>?
             </h2>
             <p className="mb-8 text-lg text-black/90">
-              Agenda una cita para conocer nuestras instalaciones y descubrir cómo podemos ayudarte.
+              Agenda una cita para conocer nuestras instalaciones personalmente y descubrir cómo podemos ayudarte.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a
-                href="/contacto"
+                href="/contact"
                 className="inline-flex items-center rounded-full bg-white px-8 py-4 text-sm font-medium text-gray-800 shadow-lg transition-all hover:shadow-xl hover:scale-105 milele-shadow"
               >
-                Contactar ahora
-              </a>
-              <a
-                href="tel:+34123456789"
-                className="inline-flex items-center rounded-full bg-black/10 backdrop-blur-sm px-8 py-4 text-sm font-medium text-black border border-black/20 transition-all hover:bg-black/20"
-              >
-                Llamar directamente
+                Contactar ahora <ArrowRight className="ml-2 h-4 w-4" />
               </a>
             </div>
           </div>
         </div>
-      </section>
+      </section>      {/* Image Modal */}
+      <ImageModal
+        isOpen={selectedImage !== null}
+        onClose={closeModal}
+        images={galleryImages}
+        currentIndex={selectedImage}
+        onNavigate={navigateModal}
+      />
     </>
   )
 }

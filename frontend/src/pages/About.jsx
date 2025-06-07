@@ -1,5 +1,8 @@
 import { Link } from "react-router"
 import { ArrowRight, Heart, Brain, Users } from "lucide-react"
+import patricia from "../assets/images/patricia1.webp"
+import silvia from "../assets/images/silvia2.webp"
+import lucia from "../assets/images/lucia2.webp"
 
 // Profesionales de Milele Centro Multidisciplinar
 const professionals = [
@@ -10,15 +13,15 @@ const professionals = [
     color: "purple",
     description:
       "Especialista en trastornos del habla y lenguaje con enfoque en intervención temprana. Apasionada por ayudar a las personas a desarrollar su máximo potencial comunicativo.",
-    image: "/placeholder.svg?height=400&width=400",
+    image: patricia,
   },
   {
     id: "silvia",
-    name: "Silvia Cabello",
+    name: "Silvia Cabello Dominguez",
     role: "Psicóloga",
     color: "blue",
     description: "Psicóloga especializada en terapia familiar y de pareja. Comprometida con crear espacios seguros donde las personas puedan sanar y crecer emocionalmente.",
-    image: "/placeholder.svg?height=400&width=400",
+    image: silvia,
   },
   {
     id: "lucia",
@@ -27,7 +30,7 @@ const professionals = [
     color: "green",
     description:
       "Especialista en pedagogía terapéutica con experiencia en necesidades educativas especiales. Dedicada a crear estrategias de aprendizaje inclusivas y personalizadas.",
-    image: "/placeholder.svg?height=400&width=400",
+    image: lucia,
   },
 ]
 
@@ -43,9 +46,7 @@ export default function About() {
               <span className="script-font text-5xl md:text-6xl block mb-2 text-black">Quienes Somos</span>
             </h1>
             <p className="mb-8 text-lg md:text-xl text-black/90 max-w-3xl mx-auto">
-              Somos un equipo de profesionales dedicados a mejorar la salud mental y el bienestar de nuestros pacientes.
-              Con años de experiencia y formación especializada, ofrecemos un servicio personalizado y de calidad en
-              nuestro centro multidisciplinar.
+              En Milele, somos un equipo de tres profesionales apasionadas por el bienestar y desarrollo de las personas. Nos une el compromiso de ofrecer una atención integral y de calidad, creando un espacio donde cada persona se sienta comprendida, apoyada y acompañada en su proceso de crecimiento y superación. Nos inspiramos en la pedagogía del amor, acompañando a cada niño, niña y familia desde una mirada comprensiva, afectiva y personalizada. Creemos que todos los seres humanos tienen un potencial único, y nuestro objetivo es ofrecer las herramientas necesarias para que puedan descubrirlo y desarrollarlo a su ritmo.
             </p>
           </div>
         </div>
@@ -89,23 +90,23 @@ export default function About() {
               return (
                 <div
                   key={professional.id}
-                  className={`group overflow-hidden rounded-2xl bg-gradient-to-br ${colors.gradient} shadow-lg milele-shadow hover:shadow-xl transition-all duration-300 border ${colors.border}`}
+                  className={`group overflow-hidden rounded-2xl bg-gradient-to-br ${colors.gradient} shadow-lg milele-shadow hover:shadow-xl transition-all duration-300 border ${colors.border} flex flex-col`}
                 >
-                  <div className="relative h-64 w-full overflow-hidden">
+                  <div className="relative w-full overflow-hidden flex-shrink-0">
                     <img
                       src={professional.image || "/placeholder.svg"}
                       alt={professional.name}
-                      className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
+                      className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
                   </div>
-                  <div className="p-6">
+                  <div className="p-6 flex-grow flex flex-col">
                     <h3 className="mb-2 text-xl font-semibold font-serif text-gray-900">{professional.name}</h3>
                     <p className={`mb-3 text-sm font-medium ${colors.roleText}`}>{professional.role}</p>
-                    <p className="mb-4 text-gray-600 text-sm leading-relaxed">{professional.description}</p>
+                    <p className="mb-4 text-gray-600 text-sm leading-relaxed flex-grow">{professional.description}</p>
                     <Link
                       to={`/about/${professional.id}`}
-                      className={`inline-flex items-center text-sm font-medium ${colors.linkText} transition-colors`}
+                      className={`inline-flex items-center text-sm font-medium ${colors.linkText} transition-colors mt-auto`}
                     >
                       Conocer más <ArrowRight className="ml-1 h-4 w-4" />
                     </Link>

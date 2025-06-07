@@ -1,5 +1,8 @@
 import { Link, useParams, Navigate } from "react-router"
 import { ArrowLeft, Award, Heart, BookOpen, Smile } from "lucide-react"
+import patricia from "../assets/images/patricia2.webp"
+import silvia from "../assets/images/silvia1.webp"
+import lucia from "../assets/images/lucia1.webp"
 
 // Profesionales de Milele Centro Multidisciplinar
 const professionals = {
@@ -8,7 +11,7 @@ const professionals = {
     role: "Logopeda",
     color: "purple",
     license: "L-28/46758",
-    image: "/placeholder.svg?height=600&width=600",
+    image: patricia,
     specialties: [
       "Trastornos del habla y lenguaje",
       "Intervención temprana",
@@ -29,7 +32,7 @@ const professionals = {
     role: "Psicóloga",
     color: "blue",
     license: "P-28/32156",
-    image: "/placeholder.svg?height=600&width=600",
+    image: silvia,
     specialties: [
       "Terapia familiar y de pareja",
       "Ansiedad y depresión",
@@ -50,7 +53,7 @@ const professionals = {
     role: "Pedagogía Terapéutica",
     color: "green",
     license: "PT-28/89234",
-    image: "/placeholder.svg?height=600&width=600",
+    image: lucia,
     specialties: [
       "Necesidades educativas especiales",
       "Trastornos del aprendizaje",
