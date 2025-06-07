@@ -183,7 +183,7 @@ export default function Contact() {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full rounded-xl border border-gray-300 px-4 py-3 focus:border-milele-cyan-dark focus:outline-none focus:ring-2 focus:ring-milele-cyan-dark/20 transition-colors"
-                    placeholder="+34 123 456 789"
+                    placeholder="+34 614 438 477"
                   />                </div>
 
                 <div>
