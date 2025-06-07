@@ -110,17 +110,6 @@ export default function Footer() {
 
         <div className="mt-8 border-t border-milele-green/20 py-6 text-center text-sm text-gray-600">
           <p>© {new Date().getFullYear()} Milele Centro Multidisciplinar. Todos los derechos reservados.</p>
-          <div className="mt-2 space-x-4">
-            <Link href="/privacidad" className="hover:text-milele-pink-dark transition-colors">
-              Política de Privacidad
-            </Link>
-            <Link href="/cookies" className="hover:text-milele-pink-dark transition-colors">
-              Política de Cookies
-            </Link>
-            <Link href="/legal" className="hover:text-milele-pink-dark transition-colors">
-              Aviso Legal
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
